@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yesuwaba (Esther) Bamazi — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F7EDD8; --sand: #E8D4AC; --terra: #B85C38;
+      --terra-dark: #8C3E22; --brown: #3A1F0D; --brown-mid: #6B3A1F;
+      --sage-light: #C4D0B5; --text: #2C1508; --text-mid: #6B4226; --text-light: #9E7A5A;
+    }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; opacity: 0.5; }
+
+    .lang-toggle { position: fixed; top: 1rem; right: 1.2rem; z-index: 200; display: flex; background: rgba(58,31,13,0.85); border: 1px solid rgba(184,92,56,0.3); border-radius: 2px; overflow: hidden; backdrop-filter: blur(8px); }
+    .lang-btn { padding: 0.4rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(247,237,216,0.4); background: transparent; border: none; cursor: pointer; transition: all 0.2s; }
+    .lang-btn.active { background: var(--terra); color: #fff; }
+    .lang-btn:hover:not(.active) { color: rgba(247,237,216,0.8); }
+
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1.2rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(247,237,216,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(184,92,56,0.15); }
+    .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; letter-spacing: 0.03em; color: var(--brown); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--terra); }
+    .nav-home { font-size: 0.72rem; color: var(--terra); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(184,92,56,0.3); padding: 0.35rem 0.8rem; transition: all 0.2s; }
+    .nav-home:hover { background: var(--terra); color: #fff; }
+
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 6rem 6rem 4rem; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 110%; background: radial-gradient(ellipse at center, var(--sand) 0%, transparent 70%); z-index: 0; opacity: 0.6; }
+    .hero-text { position: relative; z-index: 1; }
+    .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); font-weight: 500; margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s; }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem,5.5vw,5.5rem); font-weight: 300; line-height: 1.05; color: var(--brown); margin-bottom: 0.3rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.35s; }
+    .hero-name em { font-style: italic; color: var(--terra); }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem,1.8vw,1.5rem); font-weight: 300; font-style: italic; color: var(--text-mid); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s; }
+    .hero-desc { font-size: 0.92rem; line-height: 1.85; color: var(--text-mid); max-width: 420px; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s; }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.8s; }
+    .badge { background: var(--sand); border: 1px solid rgba(184,92,56,0.25); color: var(--brown-mid); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 2px; font-weight: 400; }
+    .hero-cta { display: flex; gap: 1rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.95s; }
+    .btn-primary { background: var(--terra); color: #fff; border: none; padding: 0.85rem 2rem; font-family: 'DM Sans',sans-serif; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background 0.2s,transform 0.2s; display: inline-block; }
+    .btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--terra); border: 1px solid var(--terra); padding: 0.85rem 2rem; font-family: 'DM Sans',sans-serif; font-size: 0.78rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all 0.2s; display: inline-block; }
+    .btn-outline:hover { background: var(--terra); color: #fff; transform: translateY(-1px); }
+    .hero-photo { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; opacity: 0; animation: fadeIn 1s ease forwards 0.5s; }
+    .photo-frame { position: relative; width: 340px; height: 420px; }
+    .photo-frame::before { content: ''; position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px; border: 2px solid var(--terra); opacity: 0.35; z-index: 0; }
+    .photo-placeholder { width: 100%; height: 100%; background: linear-gradient(145deg,var(--sand) 0%,var(--sage-light) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 1; overflow: hidden; }
+    .photo-placeholder-text { font-family: 'Cormorant Garamond',serif; font-size: 0.9rem; color: var(--text-mid); text-align: center; padding: 1.5rem; font-style: italic; }
+    .photo-placeholder svg { width: 80px; height: 80px; opacity: 0.3; margin-bottom: 1rem; fill: var(--brown-mid); }
+    .photo-tag { position: absolute; bottom: -12px; right: -12px; background: var(--brown); color: var(--cream); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.6rem 1.2rem; z-index: 2; }
+
+    section { padding: 6rem 6rem; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terra); font-weight: 500; margin-bottom: 1rem; }
+    .section-title { font-family: 'Cormorant Garamond',serif; font-size: clamp(2rem,3.5vw,3.2rem); font-weight: 300; color: var(--brown); line-height: 1.1; margin-bottom: 3rem; }
+    .section-title em { font-style: italic; color: var(--terra); }
+    .divider { width: 100%; height: 1px; background: linear-gradient(to right,transparent,var(--terra),transparent); opacity: 0.25; }
+
+    .about { background: var(--brown); color: var(--cream); }
+    .about .section-title { color: var(--cream); }
+    .about .section-title em { color: var(--sand); }
+    .about .section-label { color: var(--sand); }
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6rem; align-items: start; }
+    .about-text p { font-size: 0.95rem; line-height: 2; color: rgba(247,237,216,0.8); margin-bottom: 1.5rem; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .stat-item { border-top: 1px solid rgba(247,237,216,0.2); padding-top: 1.2rem; }
+    .stat-number { font-family: 'Cormorant Garamond',serif; font-size: 2.8rem; font-weight: 300; color: var(--sand); line-height: 1; margin-bottom: 0.4rem; }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,237,216,0.5); }
+    .lang-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+    .lang-item { display: flex; align-items: center; justify-content: space-between; }
+    .lang-name-el { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,237,216,0.7); }
+    .lang-bar { flex: 1; margin: 0 1.2rem; height: 2px; background: rgba(247,237,216,0.1); position: relative; }
+    .lang-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--terra); }
+    .lang-level { font-size: 0.68rem; color: rgba(247,237,216,0.4); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 1rem; }
+    .service-card { border: 1px solid rgba(184,92,56,0.2); padding: 2.5rem 2rem; background: rgba(232,212,172,0.2); transition: all 0.3s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--terra); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { background: rgba(232,212,172,0.4); transform: translateY(-4px); }
+    .service-icon { font-size: 2rem; margin-bottom: 1.2rem; }
+    .service-title { font-family: 'Cormorant Garamond',serif; font-size: 1.4rem; font-weight: 600; color: var(--brown); margin-bottom: 0.8rem; }
+    .service-desc { font-size: 0.85rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; }
+    .service-subjects { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .service-tag { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--sand); color: var(--brown-mid); padding: 0.25rem 0.6rem; border-radius: 1px; }
+
+    .project { background: linear-gradient(160deg,var(--sand) 0%,var(--cream) 60%); }
+    .project-inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
+    .project-diagram { background: var(--brown); padding: 2.5rem; }
+    .diagram-title { font-family: 'Cormorant Garamond',serif; font-size: 1rem; color: var(--sand); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; font-weight: 300; }
+    .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(247,237,216,0.1); }
+    .app-box { background: rgba(58,31,13,0.8); padding: 1.2rem; text-align: center; transition: background 0.2s; }
+    .app-box:hover { background: rgba(184,92,56,0.3); }
+    .app-box-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .app-box-name { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sand); font-weight: 400; }
+    .app-box-desc { font-size: 0.65rem; color: rgba(247,237,216,0.5); margin-top: 0.3rem; line-height: 1.4; }
+    .project-tag-row { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-tag { background: rgba(247,237,216,0.08); border: 1px solid rgba(247,237,216,0.15); color: rgba(247,237,216,0.6); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
+    .project-content h3 { font-family: 'Cormorant Garamond',serif; font-size: 2rem; font-weight: 300; color: var(--brown); margin-bottom: 1rem; line-height: 1.2; }
+    .project-content h3 em { font-style: italic; color: var(--terra); }
+    .project-content p { font-size: 0.88rem; line-height: 1.9; color: var(--text-mid); margin-bottom: 1.2rem; }
+    .feature-list { list-style: none; margin: 1.5rem 0; }
+    .feature-list li { font-size: 0.85rem; color: var(--text-mid); padding: 0.7rem 0; border-bottom: 1px solid rgba(184,92,56,0.1); display: flex; align-items: flex-start; gap: 0.8rem; line-height: 1.6; }
+    .feature-list li::before { content: '→'; color: var(--terra); flex-shrink: 0; margin-top: 0.1rem; }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+    .skill-group { padding: 1.8rem; border: 1px solid rgba(184,92,56,0.15); background: rgba(232,212,172,0.15); }
+    .skill-group-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra); margin-bottom: 1.2rem; font-weight: 500; }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .skill-list li { font-size: 0.82rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.5rem; }
+    .skill-list li::before { content: '·'; color: var(--terra); font-size: 1.2rem; line-height: 1; }
+
+    .cv-section { background: var(--terra); color: #fff; padding: 5rem 6rem; display: flex; align-items: center; justify-content: space-between; gap: 3rem; }
+    .cv-text h2 { font-family: 'Cormorant Garamond',serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; margin-bottom: 0.8rem; line-height: 1.1; }
+    .cv-text p { font-size: 0.9rem; opacity: 0.85; max-width: 500px; line-height: 1.7; }
+    .btn-white { background: #fff; color: var(--terra); border: none; padding: 1rem 2.5rem; font-family: 'DM Sans',sans-serif; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: all 0.2s; display: inline-block; cursor: pointer; }
+    .btn-white:hover { background: var(--cream); transform: translateY(-2px); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: start; }
+    .contact-info p { font-size: 0.9rem; line-height: 1.9; color: var(--text-mid); margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-mid); font-size: 0.85rem; transition: color 0.2s; padding-bottom: 1rem; border-bottom: 1px solid rgba(184,92,56,0.1); }
+    .contact-link:hover { color: var(--terra); }
+    .contact-link-icon { width: 36px; height: 36px; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-mid); font-weight: 500; }
+    .form-input, .form-textarea { background: transparent; border: 1px solid rgba(184,92,56,0.25); padding: 0.85rem 1rem; font-family: 'DM Sans',sans-serif; font-size: 0.88rem; color: var(--text); outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-input:focus, .form-textarea:focus { border-color: var(--terra); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    footer { background: var(--brown); color: rgba(247,237,216,0.4); padding: 2rem 6rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; letter-spacing: 0.08em; }
+    footer span { color: rgba(247,237,216,0.6); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    @media (max-width:900px) {
+      nav { padding:1rem 2rem; } .nav-links { display:none; }
+      .hero { grid-template-columns:1fr; padding:7rem 2rem 3rem; } .hero-photo { display:none; }
+      section { padding:4rem 2rem; }
+      .about-grid,.project-inner,.contact-grid { grid-template-columns:1fr; gap:3rem; }
+      .services-grid,.skills-grid { grid-template-columns:1fr 1fr; }
+      .cv-section { flex-direction:column; padding:4rem 2rem; }
+      footer { flex-direction:column; gap:0.5rem; text-align:center; padding:2rem; }
+    }
+    @media (max-width:480px) { .services-grid,.skills-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">FR</button>
+  </div>
+
+  <nav>
+    <div class="nav-name">Yesuwaba (Esther) Bamazi</div>
+    <ul class="nav-links">
+      <li><a href="#about" data-en="About" data-fr="À propos">About</a></li>
+      <li><a href="#services" data-en="Teaching" data-fr="Cours">Teaching</a></li>
+      <li><a href="#project" data-en="Project" data-fr="Projet">Project</a></li>
+      <li><a href="#skills" data-en="Skills" data-fr="Compétences">Skills</a></li>
+      <li><a href="#contact" data-en="Contact" data-fr="Contact">Contact</a></li>
+    </ul>
+    <a href="index.html" class="nav-home" data-en="← Home" data-fr="← Accueil">← Home</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Portfolio — 2025</p>
+      <h1 class="hero-name">Yesuwaba<br/><em>Esther</em> Bamazi</h1>
+      <p class="hero-title" data-en="Bilingual Educator · Operations Specialist · Developer" data-fr="Formatrice Bilingue · Spécialiste Opérations · Développeuse">Bilingual Educator · Operations Specialist · Developer</p>
+      <p class="hero-desc" data-en="Oxford-certified bilingual (French/English) professional building bridges between education, data, and technology — from Ouagadougou to the world." data-fr="Professionnelle bilingue certifiée Oxford (Français/Anglais) qui construit des ponts entre l'éducation, les données et la technologie — d'Ouagadougou vers le monde.">Oxford-certified bilingual (French/English) professional building bridges between education, data, and technology — from Ouagadougou to the world.</p>
+      <div class="hero-badges">
+        <span class="badge" data-en="Oxford C1 English" data-fr="Anglais Oxford C1">Oxford C1 English</span>
+        <span class="badge" data-en="French Native" data-fr="Français Natif">French Native</span>
+        <span class="badge">Python · SQL</span>
+        <span class="badge" data-en="5 yrs Teaching" data-fr="5 ans d'ens.">5 yrs Teaching</span>
+        <span class="badge" data-en="Open to Work" data-fr="Disponible">Open to Work</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary" data-en="Get in Touch" data-fr="Me Contacter">Get in Touch</a>
+        <a href="#services" class="btn-outline" data-en="My Services" data-fr="Mes Services">My Services</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          <p class="photo-placeholder-text" data-en="Add your photo here" data-fr="Ajoutez votre photo ici">Add your photo here</p>
+        </div>
+        <div class="photo-tag">Ouagadougou, BF</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="about" id="about">
+    <p class="section-label" data-en="Who I Am" data-fr="Qui je suis">Who I Am</p>
+    <h2 class="section-title"><em data-en="Shaped by transition," data-fr="Forgée par la transition,">Shaped by transition,</em><br/><span data-en="driven by connection" data-fr="portée par la connexion">driven by connection</span></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p data-en="I grew up across four countries — Senegal, Burkina Faso, Niger, and France. As the child of a diplomat, constant transition wasn't a choice. But it gave me something most people spend years trying to learn: the ability to adapt, read a room, and communicate across cultures at speed." data-fr="J'ai grandi dans quatre pays — le Sénégal, le Burkina Faso, le Niger et la France. En tant qu'enfant de diplomate, la transition constante n'était pas un choix. Mais elle m'a donné quelque chose que la plupart des gens mettent des années à apprendre : la capacité à m'adapter, à lire une situation et à communiquer à travers les cultures rapidement.">I grew up across four countries — Senegal, Burkina Faso, Niger, and France. As the child of a diplomat, constant transition wasn't a choice. But it gave me something most people spend years trying to learn: the ability to adapt, read a room, and communicate across cultures at speed.</p>
+        <p data-en="My background spans engineering sciences (CPGE, CY Tech, ESGI Paris), artificial intelligence, and five years of independent teaching. I'm Oxford-certified at C1 English, native in French, and currently building a four-app real estate platform for the West African market — in Java, with AI voice support in Mooré and Dioula." data-fr="Mon parcours couvre les sciences de l'ingénieur (CPGE, CY Tech, ESGI Paris), l'intelligence artificielle et cinq ans d'enseignement indépendant. Certifiée Oxford C1 en anglais, native en français, je développe actuellement une plateforme immobilière à quatre applications pour le marché ouest-africain — en Java, avec support vocal IA en Mooré et en Dioula.">My background spans engineering sciences (CPGE, CY Tech, ESGI Paris), artificial intelligence, and five years of independent teaching.</p>
+        <p data-en="I'm not looking for easy. I'm looking for meaningful." data-fr="Je ne cherche pas la facilité. Je cherche le sens.">I'm not looking for easy. I'm looking for meaningful.</p>
+        <div class="lang-list">
+          <div class="lang-item"><span class="lang-name-el" data-en="French" data-fr="Français">French</span><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div><span class="lang-level" data-en="Native" data-fr="Natif">Native</span></div>
+          <div class="lang-item"><span class="lang-name-el" data-en="English" data-fr="Anglais">English</span><div class="lang-bar"><div class="lang-fill" style="width:90%"></div></div><span class="lang-level">Oxford C1</span></div>
+          <div class="lang-item"><span class="lang-name-el" data-en="German" data-fr="Allemand">German</span><div class="lang-bar"><div class="lang-fill" style="width:25%"></div></div><span class="lang-level" data-en="Basic" data-fr="Notions">Basic</span></div>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item"><div class="stat-number">5+</div><div class="stat-label" data-en="Years Teaching" data-fr="Ans d'enseignement">Years Teaching</div></div>
+        <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label" data-en="Client Retention" data-fr="Fidélisation clients">Client Retention</div></div>
+        <div class="stat-item"><div class="stat-number">4</div><div class="stat-label" data-en="Countries Lived In" data-fr="Pays vécus">Countries Lived In</div></div>
+        <div class="stat-item"><div class="stat-number">2</div><div class="stat-label" data-en="Languages Fluent" data-fr="Langues maîtrisées">Languages Fluent</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="services">
+    <p class="section-label" data-en="What I Offer" data-fr="Ce que je propose">What I Offer</p>
+    <h2 class="section-title"><em data-en="Teaching &amp; Consulting" data-fr="Enseignement &amp; Conseil">Teaching &amp; Consulting</em><br/><span data-en="Services" data-fr="Services">Services</span></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">📐</div>
+        <h3 class="service-title" data-en="STEM Tutoring" data-fr="Cours STEM">STEM Tutoring</h3>
+        <p class="service-desc" data-en="Personalized, rigorous instruction in Mathematics, Physics, and Chemistry. Tailored to each student's rhythm, with progress tracking and parent communication included." data-fr="Enseignement personnalisé et rigoureux en Mathématiques, Physique et Chimie. Adapté au rythme de chaque élève, avec suivi des progrès et communication avec les parents.">Personalized, rigorous instruction in Mathematics, Physics, and Chemistry.</p>
+        <div class="service-subjects">
+          <span class="service-tag" data-en="Mathematics" data-fr="Mathématiques">Mathematics</span>
+          <span class="service-tag" data-en="Physics" data-fr="Physique">Physics</span>
+          <span class="service-tag" data-en="Chemistry" data-fr="Chimie">Chemistry</span>
+          <span class="service-tag" data-en="Secondary Level" data-fr="Lycée">Secondary Level</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌍</div>
+        <h3 class="service-title" data-en="English Language" data-fr="Langue Anglaise">English Language</h3>
+        <p class="service-desc" data-en="Bilingual instruction for French speakers learning English. From conversational fluency to exam preparation (IELTS, TOEFL, Oxford ELLT), taught by an Oxford-certified C1 speaker." data-fr="Enseignement bilingue pour francophones apprenant l'anglais. De la conversation courante à la préparation aux examens, dispensé par une locutrice certifiée Oxford C1.">Bilingual instruction for French speakers learning English, from conversation to exam prep.</p>
+        <div class="service-subjects">
+          <span class="service-tag">ESL / EFL</span>
+          <span class="service-tag" data-en="Exam Prep" data-fr="Prépa examens">Exam Prep</span>
+          <span class="service-tag" data-en="Business English" data-fr="Anglais pro">Business English</span>
+          <span class="service-tag" data-en="Conversation" data-fr="Conversation">Conversation</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3 class="service-title" data-en="Study Skills &amp; Resilience" data-fr="Méthodes &amp; Résilience">Study Skills &amp; Resilience</h3>
+        <p class="service-desc" data-en="Coaching for students navigating high-pressure academic environments. Exam strategy, focus, and the soft skills the curriculum never teaches — but that determine outcomes." data-fr="Accompagnement pour les élèves dans des environnements scolaires exigeants. Stratégie d'examen, concentration et compétences transversales qui font la différence.">Coaching for students navigating high-pressure academic environments.</p>
+        <div class="service-subjects">
+          <span class="service-tag" data-en="Exam Strategy" data-fr="Stratégie examen">Exam Strategy</span>
+          <span class="service-tag" data-en="Focus &amp; Resilience" data-fr="Focus &amp; Résilience">Focus &amp; Resilience</span>
+          <span class="service-tag" data-en="Time Management" data-fr="Gestion du temps">Time Management</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="project" id="project">
+    <p class="section-label" data-en="Featured Project" data-fr="Projet phare">Featured Project</p>
+    <h2 class="section-title"><em data-en="Real Estate Micro-Ecosystem" data-fr="Micro-Écosystème Immobilier">Real Estate Micro-Ecosystem</em><br/><span data-en="for West Africa" data-fr="pour l'Afrique de l'Ouest">for West Africa</span></h2>
+    <div class="project-inner">
+      <div class="project-visual">
+        <div class="project-diagram">
+          <p class="diagram-title" data-en="Platform Architecture" data-fr="Architecture Plateforme">Platform Architecture</p>
+          <div class="app-grid">
+            <div class="app-box"><div class="app-box-icon">🌐</div><div class="app-box-name" data-en="Diaspora App" data-fr="App Diaspora">Diaspora App</div><div class="app-box-desc" data-en="Real-time tracking from Europe" data-fr="Suivi en temps réel depuis l'Europe">Real-time tracking from Europe</div></div>
+            <div class="app-box"><div class="app-box-icon">🏠</div><div class="app-box-name" data-en="Tenant App" data-fr="App Locataire">Tenant App</div><div class="app-box-desc" data-en="AI voice in Mooré &amp; Dioula" data-fr="Voix IA en Mooré &amp; Dioula">AI voice in Mooré &amp; Dioula</div></div>
+            <div class="app-box"><div class="app-box-icon">🔑</div><div class="app-box-name" data-en="Landlord App" data-fr="App Propriétaire">Landlord App</div><div class="app-box-desc" data-en="Property &amp; contract management" data-fr="Gestion biens &amp; contrats">Property &amp; contract management</div></div>
+            <div class="app-box"><div class="app-box-icon">📊</div><div class="app-box-name" data-en="Management App" data-fr="App Gestion">Management App</div><div class="app-box-desc" data-en="Agency operations dashboard" data-fr="Tableau de bord agence">Agency operations dashboard</div></div>
+          </div>
+          <div class="project-tag-row">
+            <span class="tech-tag">Java Backend</span><span class="tech-tag">Python</span><span class="tech-tag">AI</span>
+            <span class="tech-tag" data-en="Multilingual UX" data-fr="UX Multilingue">Multilingual UX</span>
+            <span class="tech-tag">REST API</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-content">
+        <h3><em data-en="Solving trust &amp; distance gaps" data-fr="Résoudre confiance &amp; distance">Solving trust &amp; distance gaps</em><br/><span data-en="in the West African property market" data-fr="dans l'immobilier ouest-africain">in the West African property market</span></h3>
+        <p data-en="Four interconnected apps — each solving a specific problem for a specific user. The goal: make real estate in Burkina Faso accessible, transparent, and functional regardless of geography, language, or literacy level." data-fr="Quatre applications interconnectées — chacune résolvant un problème spécifique. L'objectif : rendre l'immobilier au Burkina Faso accessible et transparent, quelle que soit la géographie, la langue ou le niveau d'alphabétisation.">Four interconnected apps — each solving a specific problem for a specific user.</p>
+        <ul class="feature-list">
+          <li data-en="Diaspora App: proxy model for Europeans to track construction in Burkina in real-time" data-fr="App Diaspora : modèle proxy pour suivre les constructions au Burkina depuis l'Europe en temps réel">Diaspora App: proxy model for Europeans to track construction in Burkina in real-time</li>
+          <li data-en="Tenant App: icon-driven UI with AI voice support in Mooré and Dioula for low-literacy users" data-fr="App Locataire : interface par icônes avec support vocal IA en Mooré et Dioula">Tenant App: icon-driven UI with AI voice support in Mooré and Dioula for low-literacy users</li>
+          <li data-en="Unified Java backend connecting all four platforms to a single data layer" data-fr="Backend Java unifié connectant les quatre plateformes à une seule couche de données">Unified Java backend connecting all four platforms to a single data layer</li>
+          <li data-en="Built to work even with unreliable power infrastructure — resilience by design" data-fr="Conçu pour fonctionner même avec une électricité instable — la résilience par conception">Built to work even with unreliable power infrastructure — resilience by design</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="skills">
+    <p class="section-label" data-en="Capabilities" data-fr="Capacités">Capabilities</p>
+    <h2 class="section-title"><em data-en="Skills &amp; Technical Tools" data-fr="Compétences &amp; Outils">Skills &amp; Technical Tools</em></h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <p class="skill-group-title" data-en="Programming" data-fr="Programmation">Programming</p>
+        <ul class="skill-list"><li>Python (NumPy, Pandas, Scikit-Learn)</li><li>Java</li><li>SQL</li><li>C</li><li>Git / GitHub</li></ul>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title" data-en="Office &amp; Operations" data-fr="Bureautique &amp; Ops">Office &amp; Operations</p>
+        <ul class="skill-list">
+          <li data-en="Advanced Excel (Macros, VLOOKUP)" data-fr="Excel avancé (Macros, RECHERCHEV)">Advanced Excel (Macros, VLOOKUP)</li>
+          <li>Google Workspace</li><li>MS Word / PowerPoint</li>
+          <li data-en="HRIS Concepts" data-fr="Concepts SIRH">HRIS Concepts</li>
+          <li data-en="Data Visualization" data-fr="Visualisation de données">Data Visualization</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title" data-en="Education" data-fr="Enseignement">Education</p>
+        <ul class="skill-list">
+          <li data-en="Curriculum Design" data-fr="Conception de programmes">Curriculum Design</li>
+          <li data-en="Pedagogical Instruction" data-fr="Instruction pédagogique">Pedagogical Instruction</li>
+          <li data-en="Progress Tracking" data-fr="Suivi des progrès">Progress Tracking</li>
+          <li data-en="ESL Teaching" data-fr="Enseignement ALS">ESL Teaching</li>
+          <li data-en="Exam Coaching" data-fr="Coaching examens">Exam Coaching</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title" data-en="Soft Skills" data-fr="Savoir-être">Soft Skills</p>
+        <ul class="skill-list">
+          <li data-en="Bilingual Communication" data-fr="Communication bilingue">Bilingual Communication</li>
+          <li data-en="Cross-cultural Fluency" data-fr="Aisance interculturelle">Cross-cultural Fluency</li>
+          <li data-en="Conflict Resolution" data-fr="Résolution de conflits">Conflict Resolution</li>
+          <li data-en="Stakeholder Management" data-fr="Gestion des parties prenantes">Stakeholder Management</li>
+          <li data-en="Remote Collaboration" data-fr="Travail à distance">Remote Collaboration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="cv-section" id="cv">
+    <div class="cv-text">
+      <h2 data-en="Want the full picture? Download my CV." data-fr="Vous voulez en savoir plus ? Téléchargez mon CV.">Want the full picture?<br/>Download my CV.</h2>
+      <p data-en="Oxford ELLT certified. Bilingual French/English. Five years of results." data-fr="Certifiée Oxford ELLT. Bilingue Français/Anglais. Cinq ans de résultats.">Oxford ELLT certified. Bilingual French/English. Five years of results.</p>
+    </div>
+    <a href="mailto:bamazi.esther@yahoo.com?subject=CV Request" class="btn-white" data-en="Request CV →" data-fr="Demander le CV →">Request CV →</a>
+  </div>
+
+  <section id="contact">
+    <p class="section-label" data-en="Let's Connect" data-fr="Contactez-moi">Let's Connect</p>
+    <h2 class="section-title"><em data-en="Get in Touch" data-fr="Prendre contact">Get in Touch</em></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p data-en="I'm currently open to tutoring, teaching, remote operations, admin, and tech roles. Whether you have a project, an opportunity, or just a question — I'd love to hear from you." data-fr="Je suis disponible pour des cours particuliers, de l'enseignement, des postes opérationnels à distance, de l'administration et des rôles tech. Que vous ayez un projet, une opportunité ou une question — je serai ravie d'échanger.">I'm currently open to tutoring, teaching, remote operations, admin, and tech roles.</p>
+        <p data-en="Response time is usually within 24 hours." data-fr="Je réponds généralement sous 24 heures.">Response time is usually within 24 hours.</p>
+        <div class="contact-links">
+          <a href="mailto:bamazi.esther@yahoo.com" class="contact-link"><div class="contact-link-icon">✉</div>bamazi.esther@yahoo.com</a>
+          <a href="https://www.linkedin.com/in/yesuwaba-bamazi-55a2a1224/" target="_blank" class="contact-link"><div class="contact-link-icon">in</div><span data-en="LinkedIn Profile" data-fr="Profil LinkedIn">LinkedIn Profile</span></a>
+          <a href="tel:+22666567419" class="contact-link"><div class="contact-link-icon">☏</div>+226 6656-7419</a>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-group"><label class="form-label" data-en="Your Name" data-fr="Votre nom">Your Name</label><input type="text" class="form-input" placeholder="Name"/></div>
+        <div class="form-group"><label class="form-label" data-en="Email Address" data-fr="Adresse email">Email Address</label><input type="email" class="form-input" placeholder="email@example.com"/></div>
+        <div class="form-group">
+          <label class="form-label" data-en="Message" data-fr="Message">Message</label>
+          <textarea class="form-textarea" data-placeholder-en="Tell me about your opportunity or project…" data-placeholder-fr="Parlez-moi de votre opportunité ou projet…" placeholder="Tell me about your opportunity or project…"></textarea>
+        </div>
+        <a href="mailto:bamazi.esther@yahoo.com" class="btn-primary" style="text-align:center" data-en="Send via Email →" data-fr="Envoyer par email →">Send via Email →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 Yesuwaba (Esther) Bamazi</span>
+    <span data-en="Ouagadougou, Burkina Faso · Open to Remote" data-fr="Ouagadougou, Burkina Faso · Disponible à distance">Ouagadougou, Burkina Faso · Open to Remote</span>
+  </footer>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-en]').forEach(el => {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return;
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + lang);
+      });
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+      document.documentElement.lang = lang;
+    }
+  </script>
+</body>
+</html>

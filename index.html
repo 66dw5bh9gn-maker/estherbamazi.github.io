@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Esther Bamazi — Links</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F7EDD8; --sand: #E8D4AC; --terra: #B85C38;
+      --terra-dark: #8C3E22; --brown: #3A1F0D; --brown-mid: #6B3A1F;
+    }
+    body {
+      min-height: 100vh;
+      background-color: var(--brown);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%; left: -10%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(184,92,56,0.18) 0%, transparent 65%);
+      pointer-events: none;
+      animation: drift1 12s ease-in-out infinite alternate;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -15%; right: -10%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, rgba(232,212,172,0.1) 0%, transparent 65%);
+      pointer-events: none;
+      animation: drift2 15s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(4%,6%) scale(1.08); } }
+    @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-5%,-4%) scale(1.1); } }
+    .noise {
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* LANG TOGGLE */
+    .lang-toggle {
+      position: fixed;
+      top: 1.2rem; right: 1.2rem;
+      z-index: 100;
+      display: flex;
+      background: rgba(247,237,216,0.07);
+      border: 1px solid rgba(247,237,216,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      padding: 0.4rem 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247,237,216,0.4);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--terra);
+      color: #fff;
+    }
+    .lang-btn:hover:not(.active) { color: rgba(247,237,216,0.8); }
+
+    .card {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 420px;
+      display: flex; flex-direction: column;
+      align-items: center;
+    }
+    .avatar-wrap {
+      position: relative; margin-bottom: 1.2rem;
+      opacity: 0; animation: floatUp 0.6s ease forwards 0.1s;
+    }
+    .avatar {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: linear-gradient(145deg, var(--sand), rgba(184,92,56,0.4));
+      border: 2px solid rgba(232,212,172,0.3);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .avatar svg { width: 44px; height: 44px; fill: rgba(232,212,172,0.5); }
+    .avatar-ring {
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(184,92,56,0.35);
+      animation: spin 20s linear infinite;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 400;
+      color: var(--cream); text-align: center; letter-spacing: 0.02em;
+      opacity: 0; animation: floatUp 0.6s ease forwards 0.25s;
+    }
+    .name em { font-style: italic; color: var(--sand); }
+    .tagline {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--terra); text-align: center;
+      margin-top: 0.35rem; margin-bottom: 0.8rem;
+      opacity: 0; animation: floatUp 0.6s ease forwards 0.4s;
+    }
+    .location-pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(247,237,216,0.05);
+      border: 1px solid rgba(247,237,216,0.08);
+      padding: 0.3rem 0.8rem;
+      font-size: 0.62rem; color: rgba(247,237,216,0.3);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: floatUp 0.5s ease forwards 0.45s;
+    }
+    .bio {
+      font-size: 0.8rem; color: rgba(247,237,216,0.5);
+      text-align: center; line-height: 1.7; max-width: 320px;
+      margin-bottom: 2rem;
+      opacity: 0; animation: floatUp 0.6s ease forwards 0.5s;
+    }
+    .rule {
+      width: 40px; height: 1px;
+      background: rgba(184,92,56,0.5);
+      margin-bottom: 2rem;
+      opacity: 0; animation: floatUp 0.6s ease forwards 0.55s;
+    }
+    .links { width: 100%; display: flex; flex-direction: column; gap: 0.75rem; }
+    .link-btn {
+      display: flex; align-items: center; gap: 1rem;
+      width: 100%; padding: 1rem 1.4rem;
+      background: rgba(247,237,216,0.05);
+      border: 1px solid rgba(247,237,216,0.1);
+      text-decoration: none; color: var(--cream);
+      transition: all 0.25s ease;
+      position: relative; overflow: hidden; opacity: 0;
+    }
+    .link-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--terra); transform: translateX(-100%);
+      transition: transform 0.3s ease; z-index: 0;
+    }
+    .link-btn:hover::before { transform: translateX(0); }
+    .link-btn:hover { border-color: var(--terra); transform: translateX(4px); }
+    .link-btn > * { position: relative; z-index: 1; }
+    .link-icon {
+      width: 36px; height: 36px;
+      background: rgba(184,92,56,0.25);
+      border: 1px solid rgba(184,92,56,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0; transition: background 0.25s;
+    }
+    .link-btn:hover .link-icon { background: rgba(255,255,255,0.2); border-color: transparent; }
+    .link-text { flex: 1; }
+    .link-label { display: block; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; color: var(--cream); }
+    .link-sub { display: block; font-size: 0.68rem; color: rgba(247,237,216,0.45); margin-top: 0.1rem; letter-spacing: 0.04em; transition: color 0.25s; }
+    .link-btn:hover .link-sub { color: rgba(255,255,255,0.7); }
+    .link-arrow { font-size: 0.8rem; color: rgba(247,237,216,0.3); transition: all 0.25s; }
+    .link-btn:hover .link-arrow { color: rgba(255,255,255,0.8); transform: translateX(3px); }
+    .link-btn:nth-child(1) { animation: floatUp 0.5s ease forwards 0.65s; }
+    .link-btn:nth-child(2) { animation: floatUp 0.5s ease forwards 0.75s; }
+    .link-btn:nth-child(3) { animation: floatUp 0.5s ease forwards 0.85s; }
+    .link-btn:nth-child(4) { animation: floatUp 0.5s ease forwards 0.95s; }
+    .link-btn:nth-child(5) { animation: floatUp 0.5s ease forwards 1.05s; }
+    .section-divider {
+      width: 100%; display: flex; align-items: center; gap: 0.8rem;
+      margin: 0.5rem 0 0.25rem; opacity: 0;
+    }
+    .section-divider span { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,237,216,0.25); white-space: nowrap; }
+    .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: rgba(247,237,216,0.08); }
+    .section-divider:nth-of-type(1) { animation: floatUp 0.5s ease forwards 0.7s; }
+    .section-divider:nth-of-type(2) { animation: floatUp 0.5s ease forwards 0.9s; }
+    .footer {
+      margin-top: 2.5rem; text-align: center;
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      color: rgba(247,237,216,0.2); text-transform: uppercase;
+      opacity: 0; animation: floatUp 0.5s ease forwards 1.2s;
+    }
+    @keyframes floatUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <!-- LANG TOGGLE -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">FR</button>
+  </div>
+
+  <div class="card">
+    <div class="avatar-wrap">
+      <div class="avatar">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        </svg>
+      </div>
+      <div class="avatar-ring"></div>
+    </div>
+
+    <h1 class="name">Yesuwaba <em>Esther</em> Bamazi</h1>
+    <p class="tagline" data-en="Educator · Developer · Operations Specialist" data-fr="Formatrice · Développeuse · Spécialiste Opérations">Educator · Developer · Operations Specialist</p>
+    <div class="location-pill">📍 Ouagadougou, Burkina Faso · <span data-en="Open to Remote" data-fr="Disponible à distance">Open to Remote</span></div>
+    <p class="bio" data-en="Bilingual (French/English · Oxford C1). Five years teaching STEM. Building tech for West Africa. Available now." data-fr="Bilingue (Français/Anglais · Oxford C1). Cinq ans d'enseignement des STEM. Je développe des solutions technologiques pour l'Afrique de l'Ouest. Disponible maintenant.">Bilingual (French/English · Oxford C1). Five years teaching STEM. Building tech for West Africa. Available now.</p>
+    <div class="rule"></div>
+
+    <div class="links">
+      <div class="section-divider"><span data-en="Portfolio & Work" data-fr="Portfolio & Travaux">Portfolio & Work</span></div>
+
+      <a href="portfolio.html" class="link-btn">
+        <div class="link-icon">🌿</div>
+        <div class="link-text">
+          <span class="link-label" data-en="My Portfolio" data-fr="Mon Portfolio">My Portfolio</span>
+          <span class="link-sub" data-en="Projects, services & full background" data-fr="Projets, services & parcours complet">Projects, services & full background</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="https://www.linkedin.com/in/yesuwaba-bamazi-55a2a1224/" class="link-btn" target="_blank">
+        <div class="link-icon">in</div>
+        <div class="link-text">
+          <span class="link-label">LinkedIn</span>
+          <span class="link-sub" data-en="Professional profile & experience" data-fr="Profil professionnel & expérience">Professional profile & experience</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <div class="section-divider"><span data-en="Get in Touch" data-fr="Me Contacter">Get in Touch</span></div>
+
+      <a href="mailto:bamazi.esther@yahoo.com?subject=Tutoring Enquiry" class="link-btn">
+        <div class="link-icon">📐</div>
+        <div class="link-text">
+          <span class="link-label" data-en="Book a Tutoring Session" data-fr="Réserver un Cours Particulier">Book a Tutoring Session</span>
+          <span class="link-sub" data-en="Maths · Physics · Chemistry · English" data-fr="Maths · Physique · Chimie · Anglais">Maths · Physics · Chemistry · English</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="mailto:bamazi.esther@yahoo.com?subject=Work Opportunity" class="link-btn">
+        <div class="link-icon">💼</div>
+        <div class="link-text">
+          <span class="link-label" data-en="Work & Collaboration" data-fr="Travail & Collaboration">Work & Collaboration</span>
+          <span class="link-sub" data-en="Remote roles, ops, admin, tech projects" data-fr="Postes à distance, opérations, admin, projets tech">Remote roles, ops, admin, tech projects</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="mailto:bamazi.esther@yahoo.com?subject=CV Request" class="link-btn">
+        <div class="link-icon">📄</div>
+        <div class="link-text">
+          <span class="link-label" data-en="Request My CV" data-fr="Demander mon CV">Request My CV</span>
+          <span class="link-sub" data-en="Oxford C1 · Bilingual · 5 yrs experience" data-fr="Oxford C1 · Bilingue · 5 ans d'expérience">Oxford C1 · Bilingual · 5 yrs experience</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+
+    <p class="footer">© 2025 Yesuwaba Bamazi · bamazi.esther@yahoo.com</p>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+      document.documentElement.lang = lang;
+    }
+  </script>
+</body>
+</html>
